@@ -1,7 +1,7 @@
-dt=0.05
-simulation_time=100
+dt=0.5
+simulation_time=10
 gravity=9.81
-drag_coefficient=0.1
+drag_coefficient=0.01
 target_altitude=10
 pid_kp=2
 pid_ki=0.5
