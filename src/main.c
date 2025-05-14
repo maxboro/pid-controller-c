@@ -4,12 +4,20 @@
 #include "structs.c"
 #include "read_settings.c"
 #include "altitude_model.c"
+#include "pid_controller.c"
 
-void init_state(struct AircraftState* state_aircraft_ptr){
+void init_state_aircraft(struct AircraftState* state_aircraft_ptr){
     state_aircraft_ptr->altitude = 0;
     state_aircraft_ptr->velocity = 0;
     state_aircraft_ptr->acceleration = 0;
     state_aircraft_ptr->thrust = 0;
+}
+
+void init_state_pid(struct PIDState* state_pid_ptr){
+    state_pid_ptr->error_integral = 0;
+    state_pid_ptr->error_derivative = 0;
+    state_pid_ptr->prev_error = 0;
+    state_pid_ptr->is_first_run = true;
 }
 
 int main(){
@@ -20,7 +28,9 @@ int main(){
     struct SimParams params_sim;
     struct AircraftParams params_aircraft;
     struct AircraftState state_aircraft;
-    init_state(&state_aircraft);
+    struct PIDState state_pid;
+    init_state_aircraft(&state_aircraft);
+    init_state_pid(&state_pid);
 
     // loading settings
     bool load_successful = load_settings(&params_pid, &params_sim, &params_aircraft);
@@ -30,7 +40,8 @@ int main(){
     }
 
     for (double t = 0; t <= params_sim.simulation_time; t += params_sim.dt) {
-        pid_target_thrust = 20; // for test
+        pid_target_thrust = compute_thrust(&state_pid, &params_pid, params_sim.target_altitude, 
+            state_aircraft.altitude, params_sim.dt);
         update_altitude(&params_sim, &params_aircraft, &state_aircraft, pid_target_thrust);
 
         // print status
