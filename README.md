@@ -26,6 +26,7 @@ In file settings.txt you can modify simulation parameters.
 - gravity (default 9.81) - g value for simulation in m/s^2
 - drag_coefficient (default 0.1) - drag coefficient for simulation, Newtons
 - target_altitude (default 10) - desired altitude, m
+- verbose (default 0) - 1 to print intermediate calculations, 0 only main info
 - pid_kp - PID parameter: Proportional gain
 - pid_ki - PID parameter: Integral gain
 - pid_kd - PID parameter: Derivative gain
