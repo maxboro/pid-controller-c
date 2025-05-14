@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include "utils.c"
 #include "structs.c"
 #include "read_settings.c"
 #include "altitude_model.c"

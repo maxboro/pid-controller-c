@@ -1,15 +1,5 @@
 #include <stdio.h>
 
-double cap_value(double value, double min, double max){
-    if (value > max){
-        return max;
-    } else if (value < min){
-        return min;
-    } else {
-        return value;
-    }
-}
-
 void update_altitude(
         struct SimParams* sim_params_ptr, 
         struct AircraftParams* aircraft_params_ptr,
