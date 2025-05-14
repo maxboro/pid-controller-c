@@ -12,7 +12,7 @@ git clone --recursive git@github.com:maxboro/pid-controller-c.git
 #### Simulation:
 ```bash
 make           # Builds the project
-./bin/exec     # Runs the executable
+./exec         # Runs the executable
 ```
 
 #### Clean:
