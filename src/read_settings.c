@@ -43,31 +43,33 @@ bool load_settings(struct PIDParams* params_pid_ptr, struct SimParams* params_si
         // printf("Setting: '%s'  Value: '%s'\n", key, value);
         // TODO: rewrite
         if (strcmp(key, "dt") == 0) {
-            params_sim_ptr->dt = atoi(value);
+            params_sim_ptr->dt = atof(value);
         } else if (strcmp(key, "simulation_time") == 0) {
-            params_sim_ptr->simulation_time = atoi(value);
+            params_sim_ptr->simulation_time = atof(value);
         } else if (strcmp(key, "gravity") == 0) {
-            params_sim_ptr->gravity = atoi(value);
+            params_sim_ptr->gravity = atof(value);
         } else if (strcmp(key, "drag_coefficient") == 0) {
-            params_sim_ptr->drag_coefficient = atoi(value);
+            params_sim_ptr->drag_coefficient = atof(value);
         } else if (strcmp(key, "target_altitude") == 0) {
-            params_sim_ptr->target_altitude = atoi(value);
+            params_sim_ptr->target_altitude = atof(value);
+        } else if (strcmp(key, "verbose") == 0) {
+            params_sim_ptr->verbose = atoi(value);
         } else if (strcmp(key, "pid_kp") == 0) {
-            params_pid_ptr->Kp = atoi(value);
+            params_pid_ptr->Kp = atof(value);
         } else if (strcmp(key, "pid_ki") == 0) {
-            params_pid_ptr->Ki = atoi(value);
+            params_pid_ptr->Ki = atof(value);
         } else if (strcmp(key, "pid_kd") == 0) {
-            params_pid_ptr->Kd = atoi(value);
+            params_pid_ptr->Kd = atof(value);
         } else if (strcmp(key, "pid_integral_err_min") == 0) {
-            params_pid_ptr->integral_err_min = atoi(value);
+            params_pid_ptr->integral_err_min = atof(value);
         } else if (strcmp(key, "pid_integral_err_max") == 0) {
-            params_pid_ptr->integral_err_max = atoi(value);
+            params_pid_ptr->integral_err_max = atof(value);
         } else if (strcmp(key, "aircraft_mass") == 0) {
-            params_aircraft_ptr->mass = atoi(value);
+            params_aircraft_ptr->mass = atof(value);
         } else if (strcmp(key, "aircraft_min_thrust") == 0) {
-            params_aircraft_ptr->min_thrust = atoi(value);
+            params_aircraft_ptr->min_thrust = atof(value);
         } else if (strcmp(key, "aircraft_max_thrust") == 0) {
-            params_aircraft_ptr->max_thrust = atoi(value);
+            params_aircraft_ptr->max_thrust = atof(value);
         }
     }
 
@@ -80,6 +82,7 @@ bool load_settings(struct PIDParams* params_pid_ptr, struct SimParams* params_si
     printf("gravity is set to %f\n", params_sim_ptr->gravity);
     printf("drag_coefficient is set to %f\n", params_sim_ptr->drag_coefficient);
     printf("target_altitude is set to %f\n", params_sim_ptr->target_altitude);
+    printf("verbose is set to %d\n", params_sim_ptr->verbose);
     printf("pid_kp is set to %f\n", params_pid_ptr->Kp);
     printf("pid_ki is set to %f\n", params_pid_ptr->Ki);
     printf("pid_kd is set to %f\n", params_pid_ptr->Kd);

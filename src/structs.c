@@ -1,3 +1,4 @@
+#include <stdbool.h>
 
 struct PIDParams {
     double Kp;
@@ -13,6 +14,7 @@ struct SimParams {
     double gravity;           // m/s^2
     double drag_coefficient;  // Newtons
     double target_altitude;   // meters
+    int verbose;              // 1 to print intermediate calculations, 0 only main info
 };
 
 struct AircraftParams {
@@ -26,4 +28,11 @@ struct AircraftState {
     double velocity;     // m/s
     double acceleration; // m/s^2
     double thrust;       // Newtons
+};
+
+struct PIDState {
+    double error_integral;
+    double error_derivative;
+    double prev_error;
+    bool is_first_run;
 };
