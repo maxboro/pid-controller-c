@@ -52,6 +52,8 @@ bool load_settings(struct PIDParams* params_pid_ptr, struct SimParams* params_si
             params_sim_ptr->drag_coefficient = atof(value);
         } else if (strcmp(key, "target_altitude") == 0) {
             params_sim_ptr->target_altitude = atof(value);
+        } else if (strcmp(key, "verbose") == 0) {
+            params_sim_ptr->verbose = atoi(value);
         } else if (strcmp(key, "pid_kp") == 0) {
             params_pid_ptr->Kp = atof(value);
         } else if (strcmp(key, "pid_ki") == 0) {
@@ -80,6 +82,7 @@ bool load_settings(struct PIDParams* params_pid_ptr, struct SimParams* params_si
     printf("gravity is set to %f\n", params_sim_ptr->gravity);
     printf("drag_coefficient is set to %f\n", params_sim_ptr->drag_coefficient);
     printf("target_altitude is set to %f\n", params_sim_ptr->target_altitude);
+    printf("verbose is set to %d\n", params_sim_ptr->verbose);
     printf("pid_kp is set to %f\n", params_pid_ptr->Kp);
     printf("pid_ki is set to %f\n", params_pid_ptr->Ki);
     printf("pid_kd is set to %f\n", params_pid_ptr->Kd);
