@@ -52,65 +52,64 @@ bool validate_settings(
     return true;
 }
 
-bool load_settings(struct PIDParams* params_pid_ptr, struct SimParams* params_sim_ptr, struct AircraftParams* params_aircraft_ptr){
+void parse_line(
+        const char* line,
+        struct PIDParams* params_pid_ptr,
+        struct SimParams* params_sim_ptr,
+        struct AircraftParams* params_aircraft_ptr
+        ){
+    // Copy the line        
+    size_t line_len = strlen(line) + 1;
+    char* line_copy = malloc(line_len);
+    memcpy(line_copy, line, line_len);
 
-    // Opening file in reading mode
-    FILE* file_ptr = fopen("settings.txt", "r");
+    // Split key and value
+    char *equals = strchr(line_copy, '=');
+    if (!equals) return;
 
-    if (file_ptr == NULL) {
-        fprintf(stderr, "file can't be opened \n");
-        return false;
-    }
-    char line[MAX_LINE];
+    *equals = '\0';
+    char *key = line_copy;
+    char *value = equals + 1;
 
-    while (fgets(line, sizeof(line), file_ptr)) {
-        trim_newline(line);
-
-        // Split key and value
-        char *equals = strchr(line, '=');
-        if (!equals) continue;
-
-        *equals = '\0';
-        char *key = line;
-        char *value = equals + 1;
-
-        // printf("Setting: '%s'  Value: '%s'\n", key, value);
-        // TODO: rewrite
-        if (strcmp(key, "dt") == 0) {
-            params_sim_ptr->dt = atof(value);
-        } else if (strcmp(key, "simulation_time") == 0) {
-            params_sim_ptr->simulation_time = atof(value);
-        } else if (strcmp(key, "gravity") == 0) {
-            params_sim_ptr->gravity = atof(value);
-        } else if (strcmp(key, "drag_coefficient") == 0) {
-            params_sim_ptr->drag_coefficient = atof(value);
-        } else if (strcmp(key, "target_altitude") == 0) {
-            params_sim_ptr->target_altitude = atof(value);
-        } else if (strcmp(key, "verbose") == 0) {
-            params_sim_ptr->verbose = atoi(value);
-        } else if (strcmp(key, "pid_kp") == 0) {
-            params_pid_ptr->Kp = atof(value);
-        } else if (strcmp(key, "pid_ki") == 0) {
-            params_pid_ptr->Ki = atof(value);
-        } else if (strcmp(key, "pid_kd") == 0) {
-            params_pid_ptr->Kd = atof(value);
-        } else if (strcmp(key, "pid_integral_err_min") == 0) {
-            params_pid_ptr->integral_err_min = atof(value);
-        } else if (strcmp(key, "pid_integral_err_max") == 0) {
-            params_pid_ptr->integral_err_max = atof(value);
-        } else if (strcmp(key, "aircraft_mass") == 0) {
-            params_aircraft_ptr->mass = atof(value);
-        } else if (strcmp(key, "aircraft_min_thrust") == 0) {
-            params_aircraft_ptr->min_thrust = atof(value);
-        } else if (strcmp(key, "aircraft_max_thrust") == 0) {
-            params_aircraft_ptr->max_thrust = atof(value);
-        }
+    // TODO: try to reduce amount of boilerplate
+    if (strcmp(key, "dt") == 0) {
+        params_sim_ptr->dt = atof(value);
+    } else if (strcmp(key, "simulation_time") == 0) {
+        params_sim_ptr->simulation_time = atof(value);
+    } else if (strcmp(key, "gravity") == 0) {
+        params_sim_ptr->gravity = atof(value);
+    } else if (strcmp(key, "drag_coefficient") == 0) {
+        params_sim_ptr->drag_coefficient = atof(value);
+    } else if (strcmp(key, "target_altitude") == 0) {
+        params_sim_ptr->target_altitude = atof(value);
+    } else if (strcmp(key, "verbose") == 0) {
+        params_sim_ptr->verbose = atoi(value);
+    } else if (strcmp(key, "pid_kp") == 0) {
+        params_pid_ptr->Kp = atof(value);
+    } else if (strcmp(key, "pid_ki") == 0) {
+        params_pid_ptr->Ki = atof(value);
+    } else if (strcmp(key, "pid_kd") == 0) {
+        params_pid_ptr->Kd = atof(value);
+    } else if (strcmp(key, "pid_integral_err_min") == 0) {
+        params_pid_ptr->integral_err_min = atof(value);
+    } else if (strcmp(key, "pid_integral_err_max") == 0) {
+        params_pid_ptr->integral_err_max = atof(value);
+    } else if (strcmp(key, "aircraft_mass") == 0) {
+        params_aircraft_ptr->mass = atof(value);
+    } else if (strcmp(key, "aircraft_min_thrust") == 0) {
+        params_aircraft_ptr->min_thrust = atof(value);
+    } else if (strcmp(key, "aircraft_max_thrust") == 0) {
+        params_aircraft_ptr->max_thrust = atof(value);
     }
 
-    // Closing the file
-    fclose(file_ptr);
+    free(line_copy);
+}
 
-    // Check
+void print_params(
+        const struct PIDParams* params_pid_ptr,    
+        const struct SimParams* params_sim_ptr,
+        const struct AircraftParams* params_aircraft_ptr
+        ){
     printf("dt is set to %f\n", params_sim_ptr->dt);
     printf("simulation_time is set to %f\n", params_sim_ptr->simulation_time);
     printf("gravity is set to %f\n", params_sim_ptr->gravity);
@@ -125,6 +124,29 @@ bool load_settings(struct PIDParams* params_pid_ptr, struct SimParams* params_si
     printf("aircraft_mass is set to %f\n", params_aircraft_ptr->mass);
     printf("aircraft_min_thrust is set to %f\n", params_aircraft_ptr->min_thrust);
     printf("aircraft_max_thrust is set to %f\n", params_aircraft_ptr->max_thrust);
+}
+
+bool load_settings(struct PIDParams* params_pid_ptr, struct SimParams* params_sim_ptr, struct AircraftParams* params_aircraft_ptr){
+
+    // Opening file in reading mode
+    FILE* file_ptr = fopen("settings.txt", "r");
+
+    if (file_ptr == NULL) {
+        fprintf(stderr, "file can't be opened \n");
+        return false;
+    }
+    char line[MAX_LINE];
+
+    while (fgets(line, sizeof(line), file_ptr)) {
+        trim_newline(line);
+        parse_line(line, params_pid_ptr, params_sim_ptr, params_aircraft_ptr);
+    }
+
+    // Closing the file
+    fclose(file_ptr);
+
+    // Check
+    print_params(params_pid_ptr, params_sim_ptr, params_aircraft_ptr);
 
     bool settings_are_ok = validate_settings(params_pid_ptr, params_sim_ptr, params_aircraft_ptr);
     return settings_are_ok;
