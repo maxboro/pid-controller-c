@@ -1,5 +1,5 @@
 # Description
-Simple example of PID controller in C.
+Simple example of PID controller in C. C version of [this](https://github.com/maxboro/pid-controller-cpp) project.
 PID used in simple aircraft 1D simulation (altitude only) to achieve desired altitude from point of start (0 altitude).
 
 # How to run
@@ -111,37 +111,37 @@ pid_integral_err_max is set to 1000.000000
 aircraft_mass is set to 1.000000
 aircraft_min_thrust is set to 0.000000
 aircraft_max_thrust is set to 30.000000
-aircraft_state_ptr->thrust 30.000000
+state_aircraft_ptr->thrust 30.000000
 gravity_force 9.810000
 abs_velocity -0.000000
 drag_force -0.000000
 Net force 20.190000
-aircraft_state_ptr->acceleration 20.190000
-aircraft_state_ptr->velocity 2.019000
+state_aircraft_ptr->acceleration 20.190000
+state_aircraft_ptr->velocity 2.019000
 Thrust (PID): 41.000000  Thrust (real): 30.000000  Alt: 0.201900
-aircraft_state_ptr->thrust 30.000000
+state_aircraft_ptr->thrust 30.000000
 gravity_force 9.810000
 abs_velocity 2.019000
 drag_force 0.040764
 Net force 20.149236
-aircraft_state_ptr->acceleration 20.149236
-aircraft_state_ptr->velocity 4.033924
+state_aircraft_ptr->acceleration 20.149236
+state_aircraft_ptr->velocity 4.033924
 Thrust (PID): 39.567105  Thrust (real): 30.000000  Alt: 0.605292
-aircraft_state_ptr->thrust 30.000000
+state_aircraft_ptr->thrust 30.000000
 gravity_force 9.810000
 abs_velocity 4.033924
 drag_force 0.162725
 Net force 20.027275
-aircraft_state_ptr->acceleration 20.027275
-aircraft_state_ptr->velocity 6.036651
+state_aircraft_ptr->acceleration 20.027275
+state_aircraft_ptr->velocity 6.036651
 Thrust (PID): 37.715132  Thrust (real): 30.000000  Alt: 1.208957
 ...
-aircraft_state_ptr->thrust 9.810000
+state_aircraft_ptr->thrust 9.810000
 gravity_force 9.810000
 abs_velocity 0.000000
 drag_force 0.000000
 Net force -0.000000
-aircraft_state_ptr->acceleration -0.000000
-aircraft_state_ptr->velocity 0.000000
+state_aircraft_ptr->acceleration -0.000000
+state_aircraft_ptr->velocity 0.000000
 Thrust (PID): 9.810000  Thrust (real): 9.810000  Alt: 20.000000
 ```
