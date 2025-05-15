@@ -83,7 +83,7 @@ void parse_line(
     } else if (strcmp(key, "target_altitude") == 0) {
         params_sim_ptr->target_altitude = atof(value);
     } else if (strcmp(key, "verbose") == 0) {
-        params_sim_ptr->verbose = atoi(value);
+        params_sim_ptr->verbose = (bool)atoi(value);
     } else if (strcmp(key, "pid_kp") == 0) {
         params_pid_ptr->Kp = atof(value);
     } else if (strcmp(key, "pid_ki") == 0) {

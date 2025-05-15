@@ -14,7 +14,7 @@ struct SimParams {
     double gravity;           // m/s^2
     double drag_coefficient;  // Newtons
     double target_altitude;   // meters
-    int verbose;              // 1 to print intermediate calculations, 0 only main info
+    bool verbose;             // True to print intermediate calculations, False only main info
 };
 
 struct AircraftParams {
