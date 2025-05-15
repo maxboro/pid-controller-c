@@ -13,7 +13,11 @@ void trim_newline(char *str) {
     }
 }
 
-bool validate_settings(struct PIDParams* params_pid_ptr, struct SimParams* params_sim_ptr, struct AircraftParams* params_aircraft_ptr){
+bool validate_settings(
+        const struct PIDParams* params_pid_ptr,
+        const struct SimParams* params_sim_ptr,
+        const struct AircraftParams* params_aircraft_ptr
+        ){
     char pref[] = "[Invalid setting] ";
     if (params_sim_ptr->dt <= 0){
         fprintf(stderr,"%sdt should be positive\n", pref);

@@ -8,9 +8,9 @@
 #include "pid_controller.c"
 
 void sim_loop( 
-        struct SimParams* params_sim_ptr,
-        struct PIDParams* params_pid_ptr, 
-        struct AircraftParams* params_aircraft_ptr,
+        const struct SimParams* params_sim_ptr,
+        const struct PIDParams* params_pid_ptr, 
+        const struct AircraftParams* params_aircraft_ptr,
         struct AircraftState* aircraft_state_ptr,
         struct PIDState* state_pid_ptr
         ){
