@@ -1,6 +1,5 @@
 double compute_thrust(struct PIDState* state_pid_ptr, struct PIDParams* params_pid_ptr, 
         const double target, const double current, const double dt){
-    double _error_derivative;
     double error = target - current;
     state_pid_ptr->error_integral += error * dt;
     state_pid_ptr->error_integral = cap_value(state_pid_ptr->error_integral, params_pid_ptr->integral_err_min, params_pid_ptr->integral_err_max);
