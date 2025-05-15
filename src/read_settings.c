@@ -52,7 +52,7 @@ bool validate_settings(
     return true;
 }
 
-void parse_line(
+bool parse_line(
         const char* line,
         struct PIDParams* params_pid_ptr,
         struct SimParams* params_sim_ptr,
@@ -61,11 +61,18 @@ void parse_line(
     // Copy the line        
     size_t line_len = strlen(line) + 1;
     char* line_copy = malloc(line_len);
+    if (!line_copy){
+        fprintf(stderr, "[parse_line] Memory wasn't allocated\n");
+        return false;
+    }
     memcpy(line_copy, line, line_len);
 
     // Split key and value
     char *equals = strchr(line_copy, '=');
-    if (!equals) return;
+    if (!equals){
+        free(line_copy);
+        return true;
+    }
 
     *equals = '\0';
     char *key = line_copy;
@@ -103,6 +110,7 @@ void parse_line(
     }
 
     free(line_copy);
+    return true;
 }
 
 void print_params(
@@ -137,16 +145,23 @@ bool load_settings(struct PIDParams* params_pid_ptr, struct SimParams* params_si
     }
     char line[MAX_LINE];
 
+    bool parsing_successful;
     while (fgets(line, sizeof(line), file_ptr)) {
         trim_newline(line);
-        parse_line(line, params_pid_ptr, params_sim_ptr, params_aircraft_ptr);
+        parsing_successful = parse_line(line, params_pid_ptr, params_sim_ptr, params_aircraft_ptr);
+        if (!parsing_successful)
+            break;
     }
 
     // Closing the file
     fclose(file_ptr);
 
     // Check
-    print_params(params_pid_ptr, params_sim_ptr, params_aircraft_ptr);
+    if (parsing_successful){
+        print_params(params_pid_ptr, params_sim_ptr, params_aircraft_ptr);
+    } else {
+        return false;
+    }
 
     bool settings_are_ok = validate_settings(params_pid_ptr, params_sim_ptr, params_aircraft_ptr);
     return settings_are_ok;
