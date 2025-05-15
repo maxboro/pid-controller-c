@@ -14,33 +14,34 @@ void trim_newline(char *str) {
 }
 
 bool validate_settings(struct PIDParams* params_pid_ptr, struct SimParams* params_sim_ptr, struct AircraftParams* params_aircraft_ptr){
+    char pref[] = "[Invalid setting] ";
     if (params_sim_ptr->dt <= 0){
-        fprintf(stderr,"dt should be positive\n");
+        fprintf(stderr,"%sdt should be positive\n", pref);
         return false;
     }
 
     if (params_sim_ptr->simulation_time <= 0){
-        fprintf(stderr,"simulation_time should be positive\n");
+        fprintf(stderr,"%ssimulation_time should be positive\n", pref);
         return false;
     }
 
     if (params_sim_ptr->target_altitude <= 0){
-        fprintf(stderr,"target_altitude should be positive\n");
+        fprintf(stderr,"%starget_altitude should be positive\n", pref);
         return false;
     }
 
     if (params_sim_ptr->verbose != 0 && params_sim_ptr->verbose != 1){
-        fprintf(stderr,"verbose should be 0 or 1\n");
+        fprintf(stderr,"%sverbose should be 0 or 1\n", pref);
         return false;
     }
 
     if (params_pid_ptr->integral_err_min >= params_pid_ptr->integral_err_max){
-        fprintf(stderr,"pid_integral_err_min should be less than pid_integral_err_max\n");
+        fprintf(stderr,"%spid_integral_err_min should be less than pid_integral_err_max\n", pref);
         return false;
     }
 
     if (params_aircraft_ptr->min_thrust >= params_aircraft_ptr->max_thrust){
-        fprintf(stderr,"aircraft_min_thrust should be less than aircraft_max_thrust\n");
+        fprintf(stderr,"%saircraft_min_thrust should be less than aircraft_max_thrust\n", pref);
         return false;
     }
 
