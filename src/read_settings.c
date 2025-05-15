@@ -14,7 +14,36 @@ void trim_newline(char *str) {
 }
 
 bool validate_settings(struct PIDParams* params_pid_ptr, struct SimParams* params_sim_ptr, struct AircraftParams* params_aircraft_ptr){
-    // TODO: add validation
+    if (params_sim_ptr->dt <= 0){
+        perror("dt should be positive");
+        return false;
+    }
+
+    if (params_sim_ptr->simulation_time <= 0){
+        perror("simulation_time should be positive");
+        return false;
+    }
+
+    if (params_sim_ptr->target_altitude <= 0){
+        perror("target_altitude should be positive");
+        return false;
+    }
+
+    if (params_sim_ptr->verbose != 0 && params_sim_ptr->verbose != 1){
+        perror("verbose should be 0 or 1");
+        return false;
+    }
+
+    if (params_pid_ptr->integral_err_min >= params_pid_ptr->integral_err_max){
+        perror("pid_integral_err_min should be less than pid_integral_err_max");
+        return false;
+    }
+
+    if (params_aircraft_ptr->min_thrust >= params_aircraft_ptr->max_thrust){
+        perror("aircraft_min_thrust should be less than aircraft_max_thrust");
+        return false;
+    }
+
     return true;
 }
 
