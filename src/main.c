@@ -53,7 +53,7 @@ int main(){
     }
 
     if (is_error){
-        printf("Program crashed with error\n");
+        printf("Program terminated with error\n");
     } else {
         printf("Program terminated nominally\n");
     }
