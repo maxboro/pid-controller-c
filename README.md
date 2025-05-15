@@ -1,5 +1,5 @@
 # Description
-Simple example of PID controller in C.
+Simple example of PID controller in C. C version of [this](https://github.com/maxboro/pid-controller-cpp) project.
 PID used in simple aircraft 1D simulation (altitude only) to achieve desired altitude from point of start (0 altitude).
 
 # How to run
